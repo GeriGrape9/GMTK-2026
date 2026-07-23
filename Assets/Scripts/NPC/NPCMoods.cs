@@ -32,7 +32,8 @@ public class NPCMoods : MonoBehaviour
                 break;
 
         }
-        transform.LookAt(Camera.main.transform);
+        
+        NPCBubble.transform.LookAt(Camera.main.transform);
     }
 
 }

@@ -1569,7 +1569,7 @@ Transform:
   m_GameObject: {fileID: 1223880531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -37.45765, y: 0, z: -55.27444}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1603,7 +1603,7 @@ MonoBehaviour:
   - Nezeret
   - Baizen
   Crimes:
-  - Slave trade
+  - Intergalactic slave trade
   - Glassing
   - Meteorite trafficker
   - Possession of stardust with intent to distrbute
@@ -1612,6 +1612,19 @@ MonoBehaviour:
   - Planetary hostage
   - Grand Theft Spaceship
   - Possession of stolen blaster
+  - Procuring tentacle prostitution
+  - Alien Homocide
+  - Complex Assault
+  - Aggravated Bloolaga
+  - Blaster Violation
+  - Intergalactic Arson
+  - Planetary Damage
+  - Organized Extortion
+  - Galactic Credit Embezzlement
+  - Artifact Larceny
+  - Unauthorized Laser Fire
+  - Rabble-rousing
+  - Extreme Belligerence
   MaxNPCNumber: 34
 --- !u!1 &1321205624
 GameObject:
@@ -2197,13 +2210,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018273075}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.49, z: -17.52}
+  m_LocalRotation: {x: 0.34567577, y: -0, z: -0, w: 0.938354}
+  m_LocalPosition: {x: 0, y: 10.81, z: -17.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.446, y: 0, z: 0}
 --- !u!114 &2018273079
 MonoBehaviour:
   m_ObjectHideFlags: 0
