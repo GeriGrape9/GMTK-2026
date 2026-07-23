@@ -13,6 +13,12 @@ public class CCTVController : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private CCTVHud HUDRef;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] switchSfx;
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
+    private int lastSfxIndex = -1;
+
     void Start()
     {
         camDataArray = new CameraData[cctvCameras.Length];
@@ -56,6 +62,7 @@ public class CCTVController : MonoBehaviour
         currentCameraIndex = (currentCameraIndex + 1) % cctvCameras.Length;
         cctvCameras[currentCameraIndex].SetActive(true);
         UpdateHUD(currentCameraIndex);
+        PlaySwitchSfx();
     }
 
     public void CycleCameraBack()
@@ -66,12 +73,14 @@ public class CCTVController : MonoBehaviour
         currentCameraIndex = (currentCameraIndex - 1 + cctvCameras.Length) % cctvCameras.Length;
         cctvCameras[currentCameraIndex].SetActive(true);
         UpdateHUD(currentCameraIndex);
+        PlaySwitchSfx();
     }
 
     private void UpdateHUD(int index)
     {
         CameraData data = camDataArray[index];
-        if (data == null || HUDRef == null) return;
+        if (data == null || HUDRef == null) 
+            return;
 
         HUDRef.SetInfo(data);
     }
@@ -82,5 +91,20 @@ public class CCTVController : MonoBehaviour
         {
             if (cam != null) cam.SetActive(false);
         }
+    }
+    private void PlaySwitchSfx()
+    {
+        if (switchSfx.Length == 0 || audioSource == null) 
+            return;
+
+        int index;
+        do
+        {
+            index = Random.Range(0, switchSfx.Length);
+        } while (switchSfx.Length > 1 && index == lastSfxIndex);
+
+        lastSfxIndex = index;
+        audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        audioSource.PlayOneShot(switchSfx[index]);
     }
 }
