@@ -24,9 +24,11 @@ public class NPCMovement : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame) 
         {
-            Debug.Log("pressed");
             Movement(this.gameObject);
         }
+        NavMeshHit h;
+        GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out h);
+        Debug.Log(h.mask / 8);
     }
 
     public void Movement(GameObject owner)
