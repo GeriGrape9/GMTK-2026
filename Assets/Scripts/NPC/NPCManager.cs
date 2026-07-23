@@ -1,5 +1,11 @@
 using NUnit.Framework.Constraints;
+using System.Numerics;
+using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.Rendering.DebugUI;
 
 public class NPCManager : MonoBehaviour
 {
@@ -38,7 +44,19 @@ public class NPCManager : MonoBehaviour
         "Planetary hostage",
         "Grand Theft Spaceship",
         "Possession of stolen blaster",
-        "Procuring tentacle prostitution"
+        "Procuring tentacle prostitution",
+        "Alien Homocide",
+        "Complex Assault",
+        "Aggravated Bloolaga",
+        "Blaster Violation",
+        "Intergalactic Arson",
+        "Planetary Damage",
+        "Organized Extortion",
+        "Galactic Credit Embezzlement",
+        "Artifact Larceny",
+        "Unauthorized Laser Fire",
+        "Rabble-rousing",
+        "Extreme Belligerence"
     };
 
     public int MaxNPCNumber = 34;
