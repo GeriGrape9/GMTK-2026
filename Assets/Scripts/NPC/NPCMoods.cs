@@ -32,6 +32,7 @@ public class NPCMoods : MonoBehaviour
                 break;
 
         }
+        transform.LookAt(Camera.main.transform);
     }
 
 }
