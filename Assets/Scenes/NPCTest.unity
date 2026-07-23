@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 755274271}
   - component: {fileID: 755274270}
   - component: {fileID: 755274274}
+  - component: {fileID: 755274275}
   m_Layer: 0
   m_Name: TestNPC
   m_TagString: Untagged
@@ -603,6 +604,25 @@ MonoBehaviour:
   NPCBubble: {fileID: 352927514}
   NPCMood: {fileID: 541723332}
   animator: {fileID: 541723335}
+--- !u!114 &755274275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755274269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38329b98f28c18c419265060a7eb9166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCStats
+  manager: {fileID: 1223880534}
+  Name: 
+  Number: 0
+  Crime: 
+  MoodList: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  CurrentTask: 0
+  HeldItem: 0
 --- !u!1 &1133778245
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,6 +750,76 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1223880531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1223880533}
+  - component: {fileID: 1223880534}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1223880533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223880531}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.45765, y: 0, z: -55.27444}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1223880534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223880531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c8dd0c489fa5a46b71e4d31026d482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCManager
+  NameArray:
+  - Carter
+  - Sam
+  - David
+  - Kasper
+  - Irons
+  - Kane
+  - Testament
+  - Caviera
+  - Willow
+  - Kallisto
+  - Slate
+  - Droizen
+  - Nezeret
+  - Baizen
+  Crimes:
+  - Slave trade
+  - Glassing
+  - Meteorite trafficker
+  - Possession of stardust with intent to distrbute
+  - FUI
+  - Space Murder
+  - Planetary hostage
+  - Grand Theft Spaceship
+  - Possession of stolen blaster
+  MaxNPCNumber: 34
 --- !u!1 &2018273075
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,3 +965,4 @@ SceneRoots:
   - {fileID: 1133778247}
   - {fileID: 674043478}
   - {fileID: 755274273}
+  - {fileID: 1223880533}
