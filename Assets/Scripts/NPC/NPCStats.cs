@@ -10,6 +10,7 @@ public class NPCStats : MonoBehaviour
     public string Name;
     public int Number;
     public string Crime;
+    public bool loitering; // placeholder for testing
     public NPCMoods.Moods[] MoodList;
     public NPCManager.TaskType CurrentTask;
     public NPCManager.HeldItem HeldItem;

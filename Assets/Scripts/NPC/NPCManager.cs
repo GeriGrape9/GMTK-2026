@@ -1,14 +1,10 @@
-using NUnit.Framework.Constraints;
-using System.Numerics;
-using UnityEditor.Experimental;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.AI;
 
 public class NPCManager : MonoBehaviour
 {
+    public GameObject[] NPCList;
+
     public enum TaskType
     {
         Test,
@@ -87,5 +83,21 @@ public class NPCManager : MonoBehaviour
             case 2:
                 break;
         }
+    }
+
+    public void LoiteringCheck()
+    {
+        foreach ( GameObject NPC in NPCList)
+        {
+            if (NPC.GetComponent<NPCStats>().loitering && !NPC.GetComponent<NPCMovement>().IsMovingTowardsDestination())
+            {
+                NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
+            }
+        }
+    }
+
+    private void Update()
+    {
+        LoiteringCheck();
     }
 }

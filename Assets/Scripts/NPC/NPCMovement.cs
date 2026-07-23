@@ -24,7 +24,7 @@ public class NPCMovement : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame) 
         {
-            Movement(this.gameObject);
+            Movement(gameObject);
         }
         NavMeshHit h;
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out h);
@@ -43,5 +43,26 @@ public class NPCMovement : MonoBehaviour
 
         //move
         owner.GetComponent<NavMeshAgent>().destination = destinationPoint;
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
+    }
+
+    public bool IsMovingTowardsDestination()
+    {
+        return agent.hasPath &&
+               !agent.pathPending &&
+               agent.remainingDistance > agent.stoppingDistance &&
+               agent.velocity.sqrMagnitude > 0.1f;
     }
 }
