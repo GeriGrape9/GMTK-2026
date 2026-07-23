@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -8,27 +9,13 @@ public class NPCMovement : MonoBehaviour
 {
 
     private Vector3 destinationPoint;
+    private static float prevAreaIndex;
     private NavMeshAgent agent;
 
-    void Start()
+    public float GetCurrentAreaIndex()
     {
-        agent = GetComponent<NavMeshAgent>();
-        if (agent == null)
-        {
-            Debug.LogError("NavMeshAgent component not found on this GameObject.");
-            enabled = false; // Disable script if no NavMeshAgent
-        }
-    }
-
-    void Update()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame) 
-        {
-            Movement(gameObject);
-        }
-        NavMeshHit h;
-        GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out h);
-        Debug.Log(h.mask / 8);
+        GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
+        return Mathf.Log(h.mask, 2.0f);
     }
 
     public void Movement(GameObject owner)
@@ -37,8 +24,7 @@ public class NPCMovement : MonoBehaviour
         Ray camRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         Plane xzPlane = new Plane(Vector3.up, Vector3.zero);
         //time to actually do tha raycast
-        float hitDistance;
-        xzPlane.Raycast(camRay, out hitDistance);
+        xzPlane.Raycast(camRay, out float hitDistance);
         destinationPoint = camRay.GetPoint(hitDistance);
 
         //move
@@ -49,9 +35,8 @@ public class NPCMovement : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * radius;
         randomDirection += transform.position;
-        NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
-        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, 1))
         {
             finalPosition = hit.position;
         }
@@ -64,5 +49,32 @@ public class NPCMovement : MonoBehaviour
                !agent.pathPending &&
                agent.remainingDistance > agent.stoppingDistance &&
                agent.velocity.sqrMagnitude > 0.1f;
+    }
+
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        if (agent == null)
+        {
+            Debug.LogError("NavMeshAgent component not found on this GameObject.");
+            enabled = false; // Disable script if no NavMeshAgent
+        }
+
+        prevAreaIndex = GetCurrentAreaIndex();
+    }
+
+    void Update()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Movement(gameObject);
+        }
+
+        float newIndex = GetCurrentAreaIndex();
+        if (prevAreaIndex != newIndex)
+        {
+            prevAreaIndex = newIndex;
+            Debug.Log("Entering area: #" +  newIndex);
+        }
     }
 }

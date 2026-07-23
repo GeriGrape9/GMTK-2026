@@ -3,59 +3,11 @@ using UnityEngine.AI;
 
 public class NPCManager : MonoBehaviour
 {
-    public GameObject[] NPCList;
-
     public enum TaskType
     {
         Test,
         None
     }
-
-    public string[] NameArray = 
-    {
-        "Carter", 
-        "Sam", 
-        "David",
-        "Kasper",
-        "Irons",
-        "Kane",
-        "Testament",
-        "Caviera",
-        "Willow",
-        "Kallisto",
-        "Slate",
-        "Droizen",
-        "Nezeret",
-        "Baizen"
-    };
-
-    public string[] Crimes =
-    {
-        "Intergalactic slave trade",
-        "Glassing",
-        "Meteorite trafficker",
-        "Possession of stardust with intent to distrbute",
-        "FUI",
-        "Space Murder",
-        "Planetary hostage",
-        "Grand Theft Spaceship",
-        "Possession of stolen blaster",
-        "Procuring tentacle prostitution",
-        "Alien Homocide",
-        "Complex Assault",
-        "Aggravated Bloolaga",
-        "Blaster Violation",
-        "Intergalactic Arson",
-        "Planetary Damage",
-        "Organized Extortion",
-        "Galactic Credit Embezzlement",
-        "Artifact Larceny",
-        "Unauthorized Laser Fire",
-        "Rabble-rousing",
-        "Extreme Belligerence"
-    };
-
-    public int MaxNPCNumber = 34;
 
     public enum HeldItem
     {
@@ -63,6 +15,14 @@ public class NPCManager : MonoBehaviour
         Spoon,
         None
     }
+
+    public string[] NameArray;
+
+    public string[] Crimes;
+
+    public int MaxNPCNumber;
+
+    public GameObject[] NPCList;
 
     public void Bump(GameObject NPC1, GameObject NPC2)
     {
