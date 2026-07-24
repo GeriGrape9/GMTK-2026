@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class NPCStats : MonoBehaviour
 {
-    public NPCManager manager;
+    [SerializeField] private NPCManager manager;
 
     public string Name;
     public int Number;
     public string Crime;
-    public bool loitering; // placeholder for testing
+    public bool Loitering; // placeholder for testing
+    public float BumpTimer;
     public NPCMoods.Moods[] MoodList;
     public NPCManager.TaskType CurrentTask;
     public NPCManager.HeldItem HeldItem;
