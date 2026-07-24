@@ -166,12 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f09c8d69b2a3d6499eba5da26ec31e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HoverLockController
-  cam: {fileID: 0}
+  cctvController: {fileID: 8742586420945750050}
   npcLayer:
     serializedVersion: 2
-    m_Bits: 0
-  hoverBubble: {fileID: 0}
-  hoverDisplay: {fileID: 0}
+    m_Bits: 8
+  hoverBubble: {fileID: 4381981965909056904, guid: d85925b232c140346b7160f4196c06c7, type: 3}
+  hoverDisplay: {fileID: 3731943692217236469, guid: d85925b232c140346b7160f4196c06c7, type: 3}
   bubbleWorldOffset: {x: 0, y: 2, z: 0}
   lockedPanel: {fileID: 0}
   lockedDisplay: {fileID: 0}
