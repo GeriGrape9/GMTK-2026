@@ -34,11 +34,11 @@ public class NPCManager : MonoBehaviour
         switch (Random.Range(0, 2)) {
             case 0:
                 Stats1.MoodList[Number2] = Stats1.MoodList[Number2] + 1; 
-                Stats2.MoodList[Number1] = Stats2.MoodList[Number2] - 1; 
+                Stats2.MoodList[Number1] = Stats2.MoodList[Number1] - 1; 
                 break;
             case 1:
                 Stats1.MoodList[Number2] = Stats1.MoodList[Number2] - 1; 
-                Stats2.MoodList[Number1] = Stats2.MoodList[Number2] + 1; 
+                Stats2.MoodList[Number1] = Stats2.MoodList[Number1] + 1; 
                 break;
             case 2:
                 break;

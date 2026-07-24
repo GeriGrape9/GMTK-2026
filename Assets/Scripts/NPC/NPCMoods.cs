@@ -1,8 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class NPCMoods : MonoBehaviour
 {
     public enum Moods
     {
+        None,
         Happy,
         Neutral,
         Angry,
@@ -14,26 +17,67 @@ public class NPCMoods : MonoBehaviour
         Bummed
     }
 
-    public Sprite[] sprites;
+    [SerializeField] private Moods CurrentMood = Moods.Neutral;
 
-    public Moods CurrentMood = Moods.Neutral;
+    [SerializeField] private GameObject NPCBubble;
 
-    public GameObject NPCBubble;
+    [SerializeField] private GameObject NPCMood;
 
-    public GameObject NPCMood;
+    [SerializeField] private Animator moodAnimator;
 
-    public Animator animator;
+    [SerializeField] private Animator bubbleAnimator;
+
+    [SerializeField] private CCTVManager CCTVManager;
 
     private void Update()
     {
-        switch (CurrentMood) 
-        { case Moods.Happy:
-                animator.SetTrigger("Happy");
-                break;
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            Debug.Log("Mood Test");
 
+            bubbleAnimator.SetTrigger("BubblePopup");
+            
+            SwitchEmotion();
         }
+       
         
-        NPCBubble.transform.LookAt(Camera.main.transform);
+        NPCBubble.transform.LookAt(CCTVManager.ActiveCam.transform);
+    }
+
+    private void SwitchEmotion()
+    {
+        switch (CurrentMood)
+        {
+            case Moods.None:
+                break;
+            case Moods.Happy:
+                moodAnimator.SetTrigger("Happy");
+                break;
+            case Moods.Neutral:
+                moodAnimator.SetTrigger("Neutral");
+                break;
+            case Moods.Angry:
+                moodAnimator.SetTrigger("Angry");
+                break;
+            case Moods.Sneaky:
+                moodAnimator.SetTrigger("Sneaky");
+                break;
+            case Moods.Suprise:
+                moodAnimator.SetTrigger("Suprised");
+                break;
+            case Moods.Evil:
+                moodAnimator.SetTrigger("Evil");
+                break;
+            case Moods.Question:
+                moodAnimator.SetTrigger("Question");
+                break;
+            case Moods.Scared:
+                moodAnimator.SetTrigger("Scared");
+                break;
+            case Moods.Bummed:
+                moodAnimator.SetTrigger("Bummed");
+                break;
+        }
     }
 
 }
