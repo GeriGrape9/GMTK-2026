@@ -7,8 +7,8 @@ public class NPCInfoDisplay : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text numberText;
     [SerializeField] private TMP_Text crimeText;
-    [SerializeField] private TMP_Text taskText;
-    [SerializeField] private TMP_Text heldItemText;
+    //[SerializeField] private TMP_Text taskText;
+    //[SerializeField] private TMP_Text heldItemText;
 
     public void SetData(NPCStats stats)
     {
@@ -16,11 +16,13 @@ public class NPCInfoDisplay : MonoBehaviour
             return;
 
         nameText.text = stats.Name;
-        numberText.text = "#" + stats.Number;
+        numberText.text = "ID #" + stats.Number;
         crimeText.text = stats.Crime;
+        /*
         taskText.text = stats.CurrentTask.ToString();
         heldItemText.text = stats.HeldItem == NPCManager.HeldItem.None
             ? ""
             : stats.HeldItem.ToString();
+        */
     }
 }

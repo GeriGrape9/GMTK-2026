@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class HoverLockController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private Camera cam;
+    [SerializeField] private CCTVManager cctvController;
     [SerializeField] private LayerMask npcLayer;
 
     [Header("Hover Bubble (world-space, follows NPC)")]
@@ -18,8 +18,8 @@ public class HoverLockController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip[] scanSfx;   // played on hover-start
-    [SerializeField] private AudioClip[] lockSfx;   // played on click-lock
+    [SerializeField] private AudioClip[] scanSfx;   // played on hover
+    [SerializeField] private AudioClip[] lockSfx;   // played on click
 
     private NPCStats hoveredStats;
     private Transform hoveredTransform;
@@ -44,14 +44,17 @@ public class HoverLockController : MonoBehaviour
 
     private void HandleHover()
     {
-        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Camera activeCam = cctvController.ActiveCam;
+        if (activeCam == null) return;
+
+        Ray ray = activeCam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, npcLayer))
         {
             NPCStats stats = hit.collider.GetComponent<NPCStats>();
             if (stats != null)
             {
-                // don't show the hover bubble for whichever NPC is currently locked
+                // Don't show the hover bubble for whichever NPC is currently locked
                 if (stats == lockedStats)
                 {
                     ClearHover();
@@ -69,8 +72,10 @@ public class HoverLockController : MonoBehaviour
                 return;
             }
         }
-
-        ClearHover();
+        else
+        {
+            ClearHover();
+        }
     }
 
     private void ClearHover()
@@ -106,7 +111,10 @@ public class HoverLockController : MonoBehaviour
 
     private void PositionBubbleOnScreen()
     {
-        Vector3 screenPos = cam.WorldToScreenPoint(hoveredTransform.position + bubbleWorldOffset);
+        Camera activeCam = cctvController.ActiveCam;
+        if (activeCam == null) return;
+
+        Vector3 screenPos = activeCam.WorldToScreenPoint(hoveredTransform.position + bubbleWorldOffset);
 
         if (screenPos.z < 0)
         {

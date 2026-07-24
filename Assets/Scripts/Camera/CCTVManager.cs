@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 
-public class CCTVController : MonoBehaviour
+public class CCTVManager : MonoBehaviour
 {
     [Header("CCTV Settings")]
     [SerializeField] private GameObject[] cctvCameras;
@@ -12,6 +12,8 @@ public class CCTVController : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] private CCTVHud HUDRef;
+    private Camera activeCam;
+    public Camera ActiveCam => activeCam;
 
     [Header("SFX")]
     [SerializeField] private AudioSource audioSource;
@@ -38,6 +40,7 @@ public class CCTVController : MonoBehaviour
             cctvCameras[0].SetActive(true);
             UpdateHUD(0);
         }
+        UpdateActiveCam(currentCameraIndex);
     }
     void Update()
     {
@@ -63,6 +66,7 @@ public class CCTVController : MonoBehaviour
         cctvCameras[currentCameraIndex].SetActive(true);
         UpdateHUD(currentCameraIndex);
         PlaySwitchSfx();
+        UpdateActiveCam(currentCameraIndex);
     }
 
     public void CycleCameraBack()
@@ -74,6 +78,7 @@ public class CCTVController : MonoBehaviour
         cctvCameras[currentCameraIndex].SetActive(true);
         UpdateHUD(currentCameraIndex);
         PlaySwitchSfx();
+        UpdateActiveCam(currentCameraIndex);
     }
 
     private void UpdateHUD(int index)
@@ -106,5 +111,11 @@ public class CCTVController : MonoBehaviour
         lastSfxIndex = index;
         audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
         audioSource.PlayOneShot(switchSfx[index]);
+    }
+    private void UpdateActiveCam(int index)
+    {
+        activeCam = cctvCameras[index].GetComponent<Camera>();
+        if (activeCam == null)
+            Debug.LogWarning($"No Camera component found on {cctvCameras[index].name}");
     }
 }

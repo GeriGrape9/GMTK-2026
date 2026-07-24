@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class NPCMoods : MonoBehaviour
@@ -26,6 +27,8 @@ public class NPCMoods : MonoBehaviour
 
     [SerializeField] private Animator bubbleAnimator;
 
+    [SerializeField] private CCTVManager CCTVManager;
+
     private void Update()
     {
         if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -38,7 +41,7 @@ public class NPCMoods : MonoBehaviour
         }
        
         
-        NPCBubble.transform.LookAt(Camera.main.transform);
+        NPCBubble.transform.LookAt(CCTVManager.ActiveCam.transform);
     }
 
     private void SwitchEmotion()
