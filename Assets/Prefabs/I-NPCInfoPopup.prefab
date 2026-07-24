@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Aggravated Bloolaga
+  m_text: Alien Homocide
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f8144bafe9d8b441a7c67d3566f014b, type: 2}
   m_sharedMaterial: {fileID: 2249995644134256349, guid: 9f8144bafe9d8b441a7c67d3566f014b, type: 2}
@@ -670,7 +670,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ID #33
+  m_text: ID #32
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f8144bafe9d8b441a7c67d3566f014b, type: 2}
   m_sharedMaterial: {fileID: 2249995644134256349, guid: 9f8144bafe9d8b441a7c67d3566f014b, type: 2}
@@ -770,7 +770,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4381981965909056904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.467036}
+  m_LocalPosition: {x: 0, y: 0, z: 43.27776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -782,7 +782,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 590.94867, y: 166.41733}
+  m_AnchoredPosition: {x: 219.16399, y: 168.98276}
   m_SizeDelta: {x: 400, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9129852597378932001
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Caviera David
+  m_text: Baizen Slate
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 242e2d53dee00be409ad293d935a2dd9, type: 2}
   m_sharedMaterial: {fileID: 2685391798703601554, guid: 242e2d53dee00be409ad293d935a2dd9, type: 2}
