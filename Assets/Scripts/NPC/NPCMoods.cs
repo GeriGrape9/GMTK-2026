@@ -31,22 +31,19 @@ public class NPCMoods : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-        {
-            Debug.Log("Mood Test");
-
-            bubbleAnimator.SetTrigger("BubblePopup");
-            
-            SwitchEmotion();
-        }
-       
-        
         NPCBubble.transform.LookAt(CCTVManager.ActiveCam.transform);
     }
 
-    private void SwitchEmotion()
+    public void UpdateEmotion(int NPC2)
     {
-        switch (CurrentMood)
+        bubbleAnimator.SetTrigger("BubblePopup");
+        SwitchEmotion(NPC2);
+    }
+
+    private void SwitchEmotion(int NPC2)
+    {
+        Debug.Log("new emotion is " + GetComponent<NPCStats>().MoodList[NPC2]);
+        switch (GetComponent<NPCStats>().MoodList[NPC2])
         {
             case Moods.None:
                 break;
