@@ -5,7 +5,6 @@ public class NPCMoods : MonoBehaviour
 {
     public enum Moods
     {
-        None,
         Happy,
         Neutral,
         Angry,
@@ -14,7 +13,8 @@ public class NPCMoods : MonoBehaviour
         Sneaky,
         Suprise,
         Question,
-        Bummed
+        Bummed,
+        None
     }
 
     [SerializeField] private Moods CurrentMood = Moods.Neutral;

@@ -39,10 +39,12 @@ public class NPCManager : MonoBehaviour
 
         switch (Random.Range(0, 2)) {
             case 0:
-                Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] + 1; 
+                if (Stats1.MoodList[NPC2] != NPCMoods.Moods.Evil)
+                    Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] + 1; 
                 break;
             case 1:
-                Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] - 1; 
+                if (Stats1.MoodList[NPC2] != NPCMoods.Moods.Happy)
+                    Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] - 1; 
                 break;
             case 2:
                 break;

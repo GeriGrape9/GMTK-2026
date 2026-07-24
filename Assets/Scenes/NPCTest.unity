@@ -424,7 +424,7 @@ PrefabInstance:
       objectReference: {fileID: 413786835}
     - target: {fileID: 6761661922447812753, guid: 42196759b941ba14f8eee2181f97a87f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1771,6 +1771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c8dd0c489fa5a46b71e4d31026d482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCManager
+  schedule: {fileID: 0}
   NameArray:
   - Carter
   - Sam
@@ -3375,7 +3376,7 @@ PrefabInstance:
       objectReference: {fileID: 413786835}
     - target: {fileID: 6761661922447812753, guid: 42196759b941ba14f8eee2181f97a87f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
