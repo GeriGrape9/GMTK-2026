@@ -24,13 +24,9 @@ public class NPCManager : MonoBehaviour
 
     public GameObject[] NPCList;
 
-    public void InitiateBump()
-    {
-
-    }
-
     public void Bump(GameObject NPC1, int NPC2)
     {
+        Debug.Log("bump started");
         NPCStats Stats1 = NPC1.GetComponent<NPCStats>();
 
         switch (Random.Range(0, 2)) {
@@ -43,6 +39,8 @@ public class NPCManager : MonoBehaviour
             case 2:
                 break;
         }
+        Debug.Log("NPC2 mood is " + Stats1.MoodList[NPC2]);
+        Debug.Log("bump finished");
     }
 
     public void LoiteringCheck()

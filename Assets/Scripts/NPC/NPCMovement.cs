@@ -14,7 +14,7 @@ public class NPCMovement : MonoBehaviour
     private static float prevAreaIndex;
     private NavMeshAgent agent;
     [SerializeField] private CCTVManager CCTVManager;
-    private NPCManager NPCManager;
+    [SerializeField] private NPCManager NPCManager;
 
     private NPCStats stats;
     public float GetCurrentAreaIndex()
@@ -63,8 +63,12 @@ public class NPCMovement : MonoBehaviour
             GameObject otherNPC = collision.gameObject;
             if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
             {
+                Debug.Log("collided with #" + otherNPC.GetComponent<NPCStats>().Number);
                 NPCManager.Bump(gameObject, otherNPC.GetComponent<NPCStats>().Number);
+                GetComponent<NPCMoods>().UpdateEmotion(otherNPC.GetComponent<NPCStats>().Number);
+
                 NPCManager.Bump(otherNPC, stats.Number);
+                otherNPC.GetComponent<NPCMoods>().UpdateEmotion(stats.Number);
             }
             stats.BumpTimer = 3.0f;
             otherNPC.GetComponent<NPCStats>().BumpTimer = 3.0f;
@@ -87,6 +91,14 @@ public class NPCMovement : MonoBehaviour
     void Update()
     {
         float newIndex = GetCurrentAreaIndex();
+        if (stats.BumpTimer > 0) 
+        {
+            stats.BumpTimer -= Time.deltaTime;
+        } else
+        {
+            stats.BumpTimer = 0;
+        }
+
         if (prevAreaIndex != newIndex)
         {
             prevAreaIndex = newIndex;
