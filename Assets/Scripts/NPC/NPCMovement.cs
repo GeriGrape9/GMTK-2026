@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -11,9 +12,11 @@ public class NPCMovement : MonoBehaviour
 
     private Vector3 destinationPoint;
     private static float prevAreaIndex;
-    private static bool wasClicked;
     private NavMeshAgent agent;
     [SerializeField] private CCTVManager CCTVManager;
+    private NPCManager NPCManager;
+
+    private NPCStats stats;
     public float GetCurrentAreaIndex()
     {
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
@@ -38,7 +41,7 @@ public class NPCMovement : MonoBehaviour
         Vector3 randomDirection = Random.insideUnitSphere * radius;
         randomDirection += transform.position;
         Vector3 finalPosition = Vector3.zero;
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, 1))
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, GetComponent<NavMeshAgent>().areaMask))
         {
             finalPosition = hit.position;
         }
@@ -53,8 +56,24 @@ public class NPCMovement : MonoBehaviour
                agent.velocity.sqrMagnitude > 0.1f;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (CompareTag(collision.gameObject.tag))
+        {
+            GameObject otherNPC = collision.gameObject;
+            if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
+            {
+                NPCManager.Bump(gameObject, otherNPC.GetComponent<NPCStats>().Number);
+                NPCManager.Bump(otherNPC, stats.Number);
+            }
+            stats.BumpTimer = 3.0f;
+            otherNPC.GetComponent<NPCStats>().BumpTimer = 3.0f;
+        }
+    }
+
     void Start()
     {
+        stats = GetComponent<NPCStats>();
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
@@ -67,32 +86,11 @@ public class NPCMovement : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Ray ray = CCTVManager.ActiveCam.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    Debug.Log(gameObject.name);
-                    if (!wasClicked)
-                    {
-                        wasClicked = true;
-                        // apply highlight
-                    }
-                } else if (wasClicked)
-                {
-                    wasClicked = false;
-                    Movement(gameObject);
-                }
-            }
-        }              
-
         float newIndex = GetCurrentAreaIndex();
         if (prevAreaIndex != newIndex)
         {
             prevAreaIndex = newIndex;
-            Debug.Log("Entering area: #" +  newIndex);
+            //Debug.Log("Entering area: #" +  newIndex);
         }
     }
 }
