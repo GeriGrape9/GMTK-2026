@@ -3,9 +3,17 @@ using UnityEngine.AI;
 
 public class NPCManager : MonoBehaviour
 {
+    [Header("Schedule")]
+    [SerializeField] private DailySchedule schedule;
+    private int lastAppliedHour = -1;
     public enum TaskType
     {
-        Test,
+        Idle,
+        MessHall,
+        Courtyard,
+        FreeTime,
+        CellBlocks,
+        Cells,
         None
     }
 
@@ -53,9 +61,29 @@ public class NPCManager : MonoBehaviour
             }
         }
     }
+    private void UpdateGlobalTask()
+    {
+        if (schedule == null || GameClock.Instance == null) return;
 
+        int currentHour = GameClock.Instance.CurrentTimeOfDay.Hours;
+        if (currentHour == lastAppliedHour) return; // only recalc on the hour boundary
+
+        lastAppliedHour = currentHour;
+        var active = schedule.GetActiveEntry(currentHour);
+
+        foreach (GameObject npc in NPCList)
+        {
+            NPCStats stats = npc.GetComponent<NPCStats>();
+            if (stats != null)
+                stats.CurrentTask = active.taskType;
+        }
+    }
     private void Update()
     {
+
         LoiteringCheck();
+        UpdateGlobalTask();
     }
+
+
 }
