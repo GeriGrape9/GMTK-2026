@@ -4,14 +4,16 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class NPCMovement : MonoBehaviour
 {
 
     private Vector3 destinationPoint;
     private static float prevAreaIndex;
+    private static bool wasClicked;
     private NavMeshAgent agent;
-
+    [SerializeField] private CCTVManager CCTVManager;
     public float GetCurrentAreaIndex()
     {
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
@@ -67,8 +69,24 @@ public class NPCMovement : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Movement(gameObject);
-        }
+            Ray ray = CCTVManager.ActiveCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    Debug.Log(gameObject.name);
+                    if (!wasClicked)
+                    {
+                        wasClicked = true;
+                        // apply highlight
+                    }
+                } else if (wasClicked)
+                {
+                    wasClicked = false;
+                    Movement(gameObject);
+                }
+            }
+        }              
 
         float newIndex = GetCurrentAreaIndex();
         if (prevAreaIndex != newIndex)
