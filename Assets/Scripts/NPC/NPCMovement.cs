@@ -13,7 +13,7 @@ public class NPCMovement : MonoBehaviour
     private static float prevAreaIndex;
     private static bool wasClicked;
     private NavMeshAgent agent;
-
+    [SerializeField] private CCTVManager CCTVManager;
     public float GetCurrentAreaIndex()
     {
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
@@ -69,7 +69,7 @@ public class NPCMovement : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray ray = CCTVManager.ActiveCam.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider.gameObject == gameObject)

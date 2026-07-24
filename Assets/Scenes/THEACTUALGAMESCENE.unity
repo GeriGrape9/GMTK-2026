@@ -27425,6 +27425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d402cff8edeb341b24727b3bc3d642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCMovement
+  CCTVManager: {fileID: 1355021689}
 --- !u!114 &678208517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27462,6 +27463,7 @@ MonoBehaviour:
   NPCMood: {fileID: 1813757042}
   moodAnimator: {fileID: 1813757043}
   bubbleAnimator: {fileID: 720337162}
+  CCTVManager: {fileID: 1355021689}
 --- !u!136 &678208519
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -27494,7 +27496,7 @@ Transform:
   m_GameObject: {fileID: 678208513}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 88.43, y: 9.52, z: -10.34}
+  m_LocalPosition: {x: 88.43, y: 9.57, z: -10.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57627,6 +57629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1453806668}
   - component: {fileID: 1453806667}
+  - component: {fileID: 1453806669}
   m_Layer: 0
   m_Name: NPCManager
   m_TagString: Untagged
@@ -57702,6 +57705,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1453806669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453806666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 034562627a2c9934492b8bae45c027b4, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!43 &1454103616
 Mesh:
   m_ObjectHideFlags: 0
