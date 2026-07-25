@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class HoverLockController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private CCTVManager cctvController;
+    [SerializeField] private CCTVManager CCTVManager;
     [SerializeField] private LayerMask npcLayer;
 
     [Header("Hover Bubble (world-space, follows NPC)")]
@@ -40,7 +40,7 @@ public class HoverLockController : MonoBehaviour
 
     private void HandleHover()
     {
-        Camera activeCam = cctvController.ActiveCam;
+        Camera activeCam = CCTVManager.ActiveCam;
         if (activeCam == null) return;
 
         Ray ray = activeCam.ScreenPointToRay(Mouse.current.position.ReadValue());

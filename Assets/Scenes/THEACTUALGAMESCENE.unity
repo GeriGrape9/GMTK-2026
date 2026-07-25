@@ -23226,6 +23226,30 @@ PrefabInstance:
       propertyPath: lockedDisplay
       value: 
       objectReference: {fileID: 657745237}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: switchPrompt
+      value: 
+      objectReference: {fileID: 1742975115}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: cameraNodes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: 'cameraNodes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1067202069}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: 'cameraNodes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 762825595}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: 'cameraNodes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1859455516}
+    - target: {fileID: 3473606188147234566, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
+      propertyPath: 'cameraNodes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 962856892}
     - target: {fileID: 3815301134877398012, guid: 8ed42fceb85647341aefbffd9f451f1b, type: 3}
       propertyPath: m_Name
       value: CCTV_Manager
@@ -29800,6 +29824,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5331754926901840608, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
   m_PrefabInstance: {fileID: 762825587}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &762825595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430393889344346887, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+  m_PrefabInstance: {fileID: 762825587}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762825588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1637d5ca5ac928f44bd4d0bae8fceeb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraNode
 --- !u!1 &772683441
 GameObject:
   m_ObjectHideFlags: 0
@@ -38799,6 +38834,10 @@ PrefabInstance:
       value: WardenCam (3)
       objectReference: {fileID: 0}
     - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+      propertyPath: cameraNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
       propertyPath: locationName
       value: 'Cell Block B '
       objectReference: {fileID: 0}
@@ -38812,6 +38851,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5331754926901840608, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
   m_PrefabInstance: {fileID: 962856884}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &962856892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430393889344346887, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+  m_PrefabInstance: {fileID: 962856884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962856885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1637d5ca5ac928f44bd4d0bae8fceeb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraNode
 --- !u!1 &965451401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6071110475555019140, guid: 42196759b941ba14f8eee2181f97a87f, type: 3}
@@ -43186,6 +43236,10 @@ PrefabInstance:
       value: WardenCam
       objectReference: {fileID: 0}
     - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+      propertyPath: cameraNumber
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
       propertyPath: locationName
       value: Courtyard
       objectReference: {fileID: 0}
@@ -43199,6 +43253,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5331754926901840608, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
   m_PrefabInstance: {fileID: 1067202061}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1067202069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430393889344346887, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+  m_PrefabInstance: {fileID: 1067202061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067202062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1637d5ca5ac928f44bd4d0bae8fceeb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraNode
 --- !u!43 &1093277850
 Mesh:
   m_ObjectHideFlags: 0
@@ -69473,6 +69538,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50c6f85a9b1ca8a44a799a5b28b1fcd0, type: 3}
+--- !u!114 &1742975115 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3627204654450876196, guid: 50c6f85a9b1ca8a44a799a5b28b1fcd0, type: 3}
+  m_PrefabInstance: {fileID: 1742975114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bb36b03d49ea4f8b506388710c2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CCTVSwitchPrompt
 --- !u!1 &1755834399
 GameObject:
   m_ObjectHideFlags: 0
@@ -76471,6 +76547,10 @@ PrefabInstance:
       value: WardenCam (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+      propertyPath: cameraNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520843763796505218, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
       propertyPath: locationName
       value: Mess Hall
       objectReference: {fileID: 0}
@@ -76484,6 +76564,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5331754926901840608, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
   m_PrefabInstance: {fileID: 1859455508}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1859455516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430393889344346887, guid: 33536aaa2b99d74439f5192cb006d29e, type: 3}
+  m_PrefabInstance: {fileID: 1859455508}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859455509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1637d5ca5ac928f44bd4d0bae8fceeb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraNode
 --- !u!1 &1872861762
 GameObject:
   m_ObjectHideFlags: 0
