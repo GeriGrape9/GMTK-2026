@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class NPCManager : MonoBehaviour
 {
@@ -59,9 +60,12 @@ public class NPCManager : MonoBehaviour
 
     public GameObject[] NPCList;
 
+    public GameObject ClickedNPC;
+
+    [SerializeField] private GuardManager GuardManager;
+
     public void Bump(GameObject NPC1, int NPC2)
     {
-        Debug.Log("bump started");
         NPCStats Stats1 = NPC1.GetComponent<NPCStats>();
 
         switch (Random.Range(0, 2)) {
@@ -76,8 +80,6 @@ public class NPCManager : MonoBehaviour
             case 2:
                 break;
         }
-        Debug.Log("NPC2 mood is " + Stats1.MoodList[NPC2]);
-        Debug.Log("bump finished");
     }
 
     public void LoiteringCheck()
@@ -110,6 +112,12 @@ public class NPCManager : MonoBehaviour
     {
 
         LoiteringCheck();
+        if (ClickedNPC != null && Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            GameObject closestguard = GuardManager.FindClosestGuard(ClickedNPC.transform.position);
+            Debug.Log(closestguard != null ? "sending " + closestguard.name : "not found");
+            closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
+        }
         UpdateGlobalTask();
     }
 

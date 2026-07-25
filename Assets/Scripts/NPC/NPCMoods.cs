@@ -17,8 +17,6 @@ public class NPCMoods : MonoBehaviour
         None
     }
 
-    [SerializeField] private Moods CurrentMood = Moods.Neutral;
-
     [SerializeField] private GameObject NPCBubble;
 
     [SerializeField] private GameObject NPCMood;
@@ -46,7 +44,6 @@ public class NPCMoods : MonoBehaviour
 
     private void SwitchEmotion(int NPC2)
     {
-        Debug.Log("new emotion is " + GetComponent<NPCStats>().MoodList[NPC2]);
         switch (GetComponent<NPCStats>().MoodList[NPC2])
         {
             case Moods.None:

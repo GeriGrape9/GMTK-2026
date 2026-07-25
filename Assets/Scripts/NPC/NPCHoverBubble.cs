@@ -5,6 +5,8 @@ public class NPCHoverBubble : MonoBehaviour
     [SerializeField] private GameObject bubbleRoot;       // the world-space canvas object
     [SerializeField] private NPCInfoDisplay infoDisplay;  // lives on the same canvas
     [SerializeField] private CCTVManager cctvController;
+    [SerializeField] private NPCManager NPCManager;
+    
 
     void Start()
     {
@@ -24,10 +26,12 @@ public class NPCHoverBubble : MonoBehaviour
     {
         infoDisplay.SetData(stats);
         bubbleRoot.SetActive(true);
+        NPCManager.ClickedNPC = stats.gameObject;
     }
 
-    public void Hide()
+    public void Hide(NPCStats stats)
     {
         bubbleRoot.SetActive(false);
+        NPCManager.ClickedNPC = null;
     }
 }
