@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static NPCManager;
 
 public class NPCStats : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class NPCStats : MonoBehaviour
     public float BumpTimer;
     public NPCMoods.Moods[] MoodList;
     public NPCManager.TaskType CurrentTask;
+
+    public TaskPriority CurrentPriority => TaskPriorityMap.GetPriority(CurrentTask);
+
     public NPCManager.HeldItem HeldItem;
+
 
     private void Start()
     {
@@ -24,5 +29,14 @@ public class NPCStats : MonoBehaviour
         System.Array.Fill(MoodList, NPCMoods.Moods.Neutral);
         CurrentTask = (NPCManager.TaskType) Random.Range(0, (int)NPCManager.TaskType.None);
         HeldItem = NPCManager.HeldItem.None;
+    }
+
+    public bool TrySetTask(NPCManager.TaskType newTask)
+    {
+        TaskPriority newPriority = TaskPriorityMap.GetPriority(newTask);
+        if (newPriority < CurrentPriority) return false; // blocked, current task outranks it
+
+        CurrentTask = newTask;
+        return true;
     }
 }

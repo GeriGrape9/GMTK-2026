@@ -14,7 +14,34 @@ public class NPCManager : MonoBehaviour
         FreeTime,
         CellBlocks,
         Cells,
+        SearchingForWeapon,
+        Loitering,
         None
+    }
+
+    public enum TaskPriority
+    {
+        Scheduled = 0,   // anything set by the daily schedule
+        Behavioral = 1,  // loitering
+        Critical = 2     // weapon search, alerted, fleeing, etc this stuff doesnt get overwritten by the lower tier tasks
+    }
+
+
+    //this one sorts searchingforweapon as a higher task, and loitering as a behaivoral task
+    public static class TaskPriorityMap
+    {
+        public static TaskPriority GetPriority(NPCManager.TaskType task)
+        {
+            switch (task)
+            {
+                case NPCManager.TaskType.SearchingForWeapon:
+                    return TaskPriority.Critical;
+                case NPCManager.TaskType.Loitering:
+                    return TaskPriority.Behavioral;
+                default:
+                    return TaskPriority.Scheduled;
+            }
+        }
     }
 
     public enum HeldItem
@@ -68,7 +95,7 @@ public class NPCManager : MonoBehaviour
         if (schedule == null || GameClock.Instance == null) return;
 
         int currentHour = GameClock.Instance.CurrentTimeOfDay.Hours;
-        if (currentHour == lastAppliedHour) return; // only recalc on the hour boundary
+        if (currentHour == lastAppliedHour) return;
 
         lastAppliedHour = currentHour;
         var active = schedule.GetActiveEntry(currentHour);
@@ -76,8 +103,7 @@ public class NPCManager : MonoBehaviour
         foreach (GameObject npc in NPCList)
         {
             NPCStats stats = npc.GetComponent<NPCStats>();
-            if (stats != null)
-                stats.CurrentTask = active.taskType;
+            stats?.TrySetTask(active.taskType);
         }
     }
     private void Update()
@@ -87,5 +113,11 @@ public class NPCManager : MonoBehaviour
         UpdateGlobalTask();
     }
 
+
+    //use this for after murder is completed.
+    public void ClearTask()
+    {
+        //something like this: CurrentTask = NPCManager.TaskType.None; // will get picked back up on the next schedule tick
+    }
 
 }
