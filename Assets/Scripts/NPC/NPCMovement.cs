@@ -63,7 +63,6 @@ public class NPCMovement : MonoBehaviour
             GameObject otherNPC = collision.gameObject;
             if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
             {
-                Debug.Log("collided with #" + otherNPC.GetComponent<NPCStats>().Number);
                 NPCManager.Bump(gameObject, otherNPC.GetComponent<NPCStats>().Number);
                 GetComponent<NPCMoods>().UpdateEmotion(otherNPC.GetComponent<NPCStats>().Number);
 
