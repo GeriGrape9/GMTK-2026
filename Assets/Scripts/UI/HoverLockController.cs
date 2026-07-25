@@ -23,6 +23,7 @@ public class HoverLockController : MonoBehaviour
 
     private NPCStats hoveredStats;
     private Transform hoveredTransform;
+    private NPCHoverBubble hoveredBubble;
     private NPCStats lockedStats;
 
     void Start()
@@ -35,11 +36,6 @@ public class HoverLockController : MonoBehaviour
     {
         HandleHover();
         HandleClick();
-
-        if (hoverBubble.activeSelf && hoveredTransform != null)
-        {
-            PositionBubbleOnScreen();
-        }
     }
 
     private void HandleHover()
@@ -54,7 +50,6 @@ public class HoverLockController : MonoBehaviour
             NPCStats stats = hit.collider.GetComponent<NPCStats>();
             if (stats != null)
             {
-                // Don't show the hover bubble for whichever NPC is currently locked
                 if (stats == lockedStats)
                 {
                     ClearHover();
@@ -63,20 +58,20 @@ public class HoverLockController : MonoBehaviour
 
                 if (stats != hoveredStats)
                 {
+                    ClearHover(); // hide whatever was previously hovered first
+
                     hoveredStats = stats;
-                    hoveredTransform = hit.collider.transform;
-                    hoverDisplay.SetData(stats);
-                    hoverBubble.SetActive(true);
+                    hoveredBubble = hit.collider.GetComponent<NPCHoverBubble>();
+                    hoveredBubble?.Show(stats);
                     PlayRandomSfx(scanSfx);
                 }
                 return;
             }
         }
-        else
-        {
-            ClearHover();
-        }
+
+        ClearHover();
     }
+
 
     private void ClearHover()
     {
@@ -106,23 +101,8 @@ public class HoverLockController : MonoBehaviour
             // Clicked empty space to unlock
             lockedStats = null;
             lockedPanel.SetActive(false);
+            ClearHover();
         }
-    }
-
-    private void PositionBubbleOnScreen()
-    {
-        Camera activeCam = cctvController.ActiveCam;
-        if (activeCam == null) return;
-
-        Vector3 screenPos = activeCam.WorldToScreenPoint(hoveredTransform.position + bubbleWorldOffset);
-
-        if (screenPos.z < 0)
-        {
-            hoverBubble.SetActive(false);
-            return;
-        }
-
-        hoverBubble.transform.position = screenPos;
     }
 
     private void PlayRandomSfx(AudioClip[] clips)

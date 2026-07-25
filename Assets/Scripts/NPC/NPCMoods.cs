@@ -31,7 +31,11 @@ public class NPCMoods : MonoBehaviour
 
     private void Update()
     {
-        NPCBubble.transform.LookAt(CCTVManager.ActiveCam.transform);
+        if (NPCBubble.activeSelf && CCTVManager != null && CCTVManager.ActiveCam != null)
+        {
+            Vector3 directionFromCamera = NPCBubble.transform.position - CCTVManager.ActiveCam.transform.position;
+            NPCBubble.transform.rotation = Quaternion.LookRotation(directionFromCamera);
+        }
     }
 
     public void UpdateEmotion(int NPC2)
