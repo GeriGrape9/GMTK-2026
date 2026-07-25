@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8742586420945750050}
   - component: {fileID: 7245109867121444445}
   - component: {fileID: 2048601417541351333}
+  - component: {fileID: 3473606188147234566}
   m_Layer: 0
   m_Name: CCTV_Manager
   m_TagString: Untagged
@@ -166,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f09c8d69b2a3d6499eba5da26ec31e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HoverLockController
-  cctvController: {fileID: 8742586420945750050}
+  CCTVManager: {fileID: 8742586420945750050}
   npcLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -184,3 +185,29 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d5aab1de187bcf84598d13e66fe70ac4, type: 3}
   - {fileID: 8300000, guid: 3735a4e57ffdddf4ea8fdb7963f79082, type: 3}
   - {fileID: 8300000, guid: 113950484e23e60448fc92fbf7359676, type: 3}
+--- !u!114 &3473606188147234566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3815301134877398012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5783e8d3bb298041aace0dd24d727d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CCTVCameraSwitcher
+  CCTVManager: {fileID: 8742586420945750050}
+  cameraNodes: []
+  cameraLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  audioSource: {fileID: 7245109867121444445}
+  hoverSfx:
+  - {fileID: 8300000, guid: d5aab1de187bcf84598d13e66fe70ac4, type: 3}
+  - {fileID: 8300000, guid: 3735a4e57ffdddf4ea8fdb7963f79082, type: 3}
+  - {fileID: 8300000, guid: 113950484e23e60448fc92fbf7359676, type: 3}
+  occlusionMask:
+    serializedVersion: 2
+    m_Bits: 192
+  switchPrompt: {fileID: 0}

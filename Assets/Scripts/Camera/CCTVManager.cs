@@ -21,6 +21,8 @@ public class CCTVManager : MonoBehaviour
     [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
     private int lastSfxIndex = -1;
 
+    public int CurrentCameraIndex => currentCameraIndex;
+
     void Start()
     {
         camDataArray = new CameraData[cctvCameras.Length];
@@ -37,7 +39,7 @@ public class CCTVManager : MonoBehaviour
         DisableAllCameras();
         if (cctvCameras.Length > 0)
         {
-            cctvCameras[0].SetActive(true);
+            SetCameraFeedActive(0, true);
             UpdateHUD(0);
         }
         UpdateActiveCam(currentCameraIndex);
@@ -60,10 +62,10 @@ public class CCTVManager : MonoBehaviour
     {
         if (cctvCameras.Length == 0)
             return;
-        cctvCameras[currentCameraIndex].SetActive(false);
+        SetCameraFeedActive(currentCameraIndex, false);
 
         currentCameraIndex = (currentCameraIndex + 1) % cctvCameras.Length;
-        cctvCameras[currentCameraIndex].SetActive(true);
+        SetCameraFeedActive(currentCameraIndex, true);
         UpdateHUD(currentCameraIndex);
         PlaySwitchSfx();
         UpdateActiveCam(currentCameraIndex);
@@ -73,9 +75,9 @@ public class CCTVManager : MonoBehaviour
     {
         if (cctvCameras.Length == 0)
             return;
-        cctvCameras[currentCameraIndex].SetActive(false);
+        SetCameraFeedActive(currentCameraIndex, false);
         currentCameraIndex = (currentCameraIndex - 1 + cctvCameras.Length) % cctvCameras.Length;
-        cctvCameras[currentCameraIndex].SetActive(true);
+        SetCameraFeedActive(currentCameraIndex, true);
         UpdateHUD(currentCameraIndex);
         PlaySwitchSfx();
         UpdateActiveCam(currentCameraIndex);
@@ -83,6 +85,17 @@ public class CCTVManager : MonoBehaviour
 
     private void UpdateHUD(int index)
     {
+        for (int i = 0; i < cctvCameras.Length; i++)
+        {
+            if (cctvCameras[i] != null)
+            {
+                camDataArray[i] = cctvCameras[i].GetComponent<CameraData>();
+                if (camDataArray[i] != null) camDataArray[i].cameraNumber = i;
+
+                CameraNode node = cctvCameras[i].GetComponent<CameraNode>();
+                if (node != null) node.cameraIndex = i;
+            }
+        }
         CameraData data = camDataArray[index];
         if (data == null || HUDRef == null) 
             return;
@@ -92,11 +105,10 @@ public class CCTVManager : MonoBehaviour
 
     private void DisableAllCameras()
     {
-        foreach (GameObject cam in cctvCameras)
-        {
-            if (cam != null) cam.SetActive(false);
-        }
+        for (int i = 0; i < cctvCameras.Length; i++)
+            SetCameraFeedActive(i, false);
     }
+
     private void PlaySwitchSfx()
     {
         if (switchSfx.Length == 0 || audioSource == null) 
@@ -117,5 +129,26 @@ public class CCTVManager : MonoBehaviour
         activeCam = cctvCameras[index].GetComponent<Camera>();
         if (activeCam == null)
             Debug.LogWarning($"No Camera component found on {cctvCameras[index].name}");
+    }
+    private void SetCameraFeedActive(int index, bool active)
+    {
+        GameObject camObj = cctvCameras[index];
+        Camera cam = camObj.GetComponent<Camera>();
+        if (cam != null) cam.enabled = active;
+
+        AudioListener listener = camObj.GetComponent<AudioListener>();
+        if (listener != null) listener.enabled = active;
+    }
+    public void SwitchToCamera(int index)
+    {
+        if (index == currentCameraIndex || index < 0 || index >= cctvCameras.Length) return;
+
+        SetCameraFeedActive(currentCameraIndex, false);
+        currentCameraIndex = index;
+        SetCameraFeedActive(currentCameraIndex, true);
+
+        UpdateHUD(currentCameraIndex);
+        UpdateActiveCam(currentCameraIndex);
+        PlaySwitchSfx();
     }
 }
