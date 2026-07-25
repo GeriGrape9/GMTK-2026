@@ -25,7 +25,12 @@ public class NPCMoods : MonoBehaviour
 
     [SerializeField] private Animator bubbleAnimator;
 
-    [SerializeField] private CCTVManager CCTVManager;
+    private CCTVManager CCTVManager;
+
+    private void Start()
+    {
+        CCTVManager = GetComponent<NPCStats>().CCTVManager;
+    }
 
     private void Update()
     {

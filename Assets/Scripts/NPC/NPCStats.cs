@@ -6,32 +6,41 @@ using static NPCManager;
 
 public class NPCStats : MonoBehaviour
 {
-    [SerializeField] private NPCManager manager;
+    public NPCManager NPCManager;
+    public CCTVManager CCTVManager;
 
     public string Name;
     public int Number;
     public string Crime;
     public bool Loitering; // placeholder for testing
-    public float BumpTimer;
+    public float BumpTimer = 0;
+    public GameObject MurderTarget;
+    public bool Dead = false;
     public NPCMoods.Moods[] MoodList;
-    public NPCManager.TaskType CurrentTask;
+    public TaskType CurrentTask;
 
     public TaskPriority CurrentPriority => TaskPriorityMap.GetPriority(CurrentTask);
 
-    public NPCManager.HeldItem HeldItem;
+    public HeldItem HeldItem;
+
+    private void Awake()
+    {
+        NPCManager = FindAnyObjectByType<NPCManager>();
+        CCTVManager = FindAnyObjectByType<CCTVManager>();
+    }
 
 
     private void Start()
     {
-        Name = manager.NameArray[Random.Range(0, manager.NameArray.Length)] + " " + manager.NameArray[Random.Range(0, manager.NameArray.Length)];
-        Crime = manager.Crimes[Random.Range(0, manager.Crimes.Length)];
-        Number = Random.Range(1, manager.MaxNPCNumber + 1);
+        Name = NPCManager.NameArray[Random.Range(0, NPCManager.NameArray.Length)] + " " + NPCManager.NameArray[Random.Range(0, NPCManager.NameArray.Length)];
+        Crime = NPCManager.Crimes[Random.Range(0, NPCManager.Crimes.Length)];
+        int.TryParse(gameObject.name.Substring(gameObject.name.IndexOf('#') + 1), out Number);
         System.Array.Fill(MoodList, NPCMoods.Moods.Neutral);
-        CurrentTask = (NPCManager.TaskType) Random.Range(0, (int)NPCManager.TaskType.None);
-        HeldItem = NPCManager.HeldItem.None;
+        CurrentTask = (TaskType) Random.Range(0, (int)TaskType.None);
+        HeldItem = HeldItem.None;     
     }
 
-    public bool TrySetTask(NPCManager.TaskType newTask)
+    public bool TrySetTask(TaskType newTask)
     {
         TaskPriority newPriority = TaskPriorityMap.GetPriority(newTask);
         if (newPriority < CurrentPriority) return false; // blocked, current task outranks it

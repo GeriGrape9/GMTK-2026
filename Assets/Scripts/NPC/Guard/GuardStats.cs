@@ -12,7 +12,8 @@ public class GuardStats : MonoBehaviour
         {
             if (GetComponent<NPCStats>().Loitering == true)
                 GetComponent<NPCStats>().Loitering = false;
-            GetComponent<NavMeshAgent>().SetDestination(TargetNPC.transform.position);
+            bool success = GetComponent<NavMeshAgent>().SetDestination(TargetNPC.transform.position);
+            Debug.Log($"SetDestination: {success}, target: {TargetNPC}");
         }
     }
 

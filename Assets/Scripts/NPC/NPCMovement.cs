@@ -9,31 +9,17 @@ using UnityEngine.Rendering;
 
 public class NPCMovement : MonoBehaviour
 {
-
     private Vector3 destinationPoint;
     private static float prevAreaIndex;
     private NavMeshAgent agent;
-    [SerializeField] private CCTVManager CCTVManager;
-    [SerializeField] private NPCManager NPCManager;
+    private CCTVManager CCTVManager;
+    private NPCManager NPCManager;
 
     private NPCStats stats;
     public float GetCurrentAreaIndex()
     {
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
         return Mathf.Log(h.mask, 2.0f);
-    }
-
-    public void Movement(GameObject owner)
-    {
-        //find destination position by finding plane and camera position and raycasting
-        Ray camRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Plane xzPlane = new Plane(Vector3.up, Vector3.zero);
-        //time to actually do tha raycast
-        xzPlane.Raycast(camRay, out float hitDistance);
-        destinationPoint = camRay.GetPoint(hitDistance);
-
-        //move
-        owner.GetComponent<NavMeshAgent>().destination = destinationPoint;
     }
 
     public Vector3 RandomNavmeshLocation(float radius)
@@ -48,43 +34,114 @@ public class NPCMovement : MonoBehaviour
         return finalPosition;
     }
 
-    public bool IsMovingTowardsDestination()
+    public GameObject FindClosestWeapon()
     {
-        return agent.hasPath &&
-               !agent.pathPending &&
-               agent.remainingDistance > agent.stoppingDistance &&
-               agent.velocity.sqrMagnitude > 0.1f;
+        GameObject[] WeaponList = GameObject.FindGameObjectsWithTag("Weapon");
+        
+        if (WeaponList.Length == 0)
+            return null;
+
+        GameObject targetWeapon = WeaponList[0];
+        float minDistance = Vector3.Distance(targetWeapon.transform.position, transform.position);
+        foreach (GameObject curWeapon in WeaponList)
+        {
+            float curDistance = Vector3.Distance(curWeapon.transform.position, transform.position);
+            if (curDistance < minDistance)
+            {
+                minDistance = curDistance;
+                targetWeapon = curWeapon;
+            }
+        }
+        return targetWeapon;
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CompareTag(collision.gameObject.tag))
+        if (CompareTag(collision.gameObject.tag) && 
+            CompareTag("NPC") && 
+            !collision.gameObject.GetComponent<NPCStats>().Dead)
         {
             GameObject otherNPC = collision.gameObject;
             if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
             {
-                NPCManager.Bump(gameObject, otherNPC.GetComponent<NPCStats>().Number);
+                NPCManager.Bump(gameObject, otherNPC);
                 GetComponent<NPCMoods>().UpdateEmotion(otherNPC.GetComponent<NPCStats>().Number);
 
-                NPCManager.Bump(otherNPC, stats.Number);
+                NPCManager.Bump(otherNPC, gameObject);
                 otherNPC.GetComponent<NPCMoods>().UpdateEmotion(stats.Number);
             }
             stats.BumpTimer = 3.0f;
             otherNPC.GetComponent<NPCStats>().BumpTimer = 3.0f;
         }
+
+        if (collision.gameObject.CompareTag("Weapon") && stats.MurderTarget != null)
+        {
+            stats.HeldItem = NPCManager.HeldItem.Knife;
+        }
     }
 
-    void Start()
+    public void Murder()
+    {
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        //Debug.Log("OnDrawGizmosSelected called");
+
+        if (agent == null)
+        {
+            Debug.Log("Agent is null");
+            return;
+        }
+
+        if (agent.path == null)
+        {
+            Debug.Log("Path is null");
+            return;
+        }
+
+        Debug.Log(
+            $"HasPath: {agent.hasPath}, " +
+            $"PathStatus: {agent.pathStatus}, " +
+            $"Pending: {agent.pathPending}, " +
+            $"Remaining: {agent.remainingDistance}, " +
+            $"Corners: {agent.path.corners.Length}"
+        );
+
+        Gizmos.color = Color.cyan;
+
+        Vector3[] corners = agent.path.corners;
+
+        for (int i = 0; i < corners.Length - 1; i++)
+        {
+            Gizmos.DrawLine(corners[i], corners[i + 1]);
+            Gizmos.DrawSphere(corners[i], 0.1f);
+        }
+
+        if (corners.Length > 0)
+            Gizmos.DrawSphere(corners[corners.Length - 1], 0.1f);
+
+        Gizmos.DrawSphere(agent.destination, 5.0f);
+    }
+
+    private void Start()
+    {
+        prevAreaIndex = GetCurrentAreaIndex();
+    }
+
+    void Awake()
     {
         stats = GetComponent<NPCStats>();
+        CCTVManager = stats.CCTVManager;
+        NPCManager = stats.NPCManager;
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
             Debug.LogError("NavMeshAgent component not found on this GameObject.");
             enabled = false; // Disable script if no NavMeshAgent
         }
-
-        prevAreaIndex = GetCurrentAreaIndex();
     }
 
     void Update()
@@ -96,6 +153,17 @@ public class NPCMovement : MonoBehaviour
         } else
         {
             stats.BumpTimer = 0;
+        }
+
+        if (stats.MurderTarget != null && !agent.hasPath)
+        {
+            Vector3 target = stats.HeldItem != NPCManager.HeldItem.Knife 
+                ? FindClosestWeapon().transform.position
+                : stats.MurderTarget.transform.position;
+
+            bool success = agent.SetDestination(target);
+
+            Debug.Log($"SetDestination: {success}, target: {target}");
         }
 
         if (prevAreaIndex != newIndex)

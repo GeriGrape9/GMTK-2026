@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -56,26 +58,35 @@ public class NPCManager : MonoBehaviour
 
     public string[] Crimes;
 
+    public GameObject NPCPrefab;
+
     public int MaxNPCNumber;
 
-    public GameObject[] NPCList;
+    public List<GameObject> NPCList;
 
     public GameObject ClickedNPC;
 
     [SerializeField] private GuardManager GuardManager;
 
-    public void Bump(GameObject NPC1, int NPC2)
+    public void Bump(GameObject NPC1, GameObject NPC2)
     {
         NPCStats Stats1 = NPC1.GetComponent<NPCStats>();
+        int Number2 = NPC2.GetComponent<NPCStats>().Number;
 
         switch (Random.Range(0, 2)) {
             case 0:
-                if (Stats1.MoodList[NPC2] != NPCMoods.Moods.Evil)
-                    Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] + 1; 
+                if (Stats1.MoodList[Number2] != NPCMoods.Moods.Evil)
+                    Stats1.MoodList[Number2] = Stats1.MoodList[Number2] + 1;
+                if (Stats1.MoodList[Number2] == NPCMoods.Moods.Evil)
+                {
+                    Stats1.MurderTarget = NPC2;
+                    Stats1.Loitering = false;
+                    Debug.Log("#" + Stats1.Number + "wants to shank");
+                }
                 break;
             case 1:
-                if (Stats1.MoodList[NPC2] != NPCMoods.Moods.Happy)
-                    Stats1.MoodList[NPC2] = Stats1.MoodList[NPC2] - 1; 
+                if (Stats1.MoodList[Number2] != NPCMoods.Moods.Happy)
+                    Stats1.MoodList[Number2] = Stats1.MoodList[Number2] - 1; 
                 break;
             case 2:
                 break;
@@ -86,9 +97,10 @@ public class NPCManager : MonoBehaviour
     {
         foreach ( GameObject NPC in NPCList)
         {
-            if (NPC.GetComponent<NPCStats>().Loitering && !NPC.GetComponent<NPCMovement>().IsMovingTowardsDestination())
+            if (NPC.GetComponent<NPCStats>().Loitering && !NPC.GetComponent<NavMeshAgent>().hasPath)
             {
-                NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
+                bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
+                //Debug.Log($"SetDestination: {success}");
             }
         }
     }
@@ -108,6 +120,17 @@ public class NPCManager : MonoBehaviour
             stats?.TrySetTask(active.taskType);
         }
     }
+
+    private void Start()
+    {
+        for (int i = 1; i < MaxNPCNumber + 1; i++)
+        {
+            GameObject newNPC = Instantiate(NPCPrefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity);
+            newNPC.name = "NPC #" + i;
+            NPCList.Add(newNPC);
+        }
+    }
+
     private void Update()
     {
 

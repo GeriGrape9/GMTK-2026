@@ -1,8 +1,11 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GuardManager : MonoBehaviour
 {
+    public GameObject GuardPrefab;
+    public int MaxGuardNumber;
     public GameObject[] GuardList;
 
     public GameObject FindClosestGuard(Vector3 NPCPosition)
@@ -21,4 +24,14 @@ public class GuardManager : MonoBehaviour
 
         return targetGuard;
     }
+
+    private void Start()
+    {
+        for (int i = 0; i < MaxGuardNumber; i++)
+        {
+            GuardList.Append(Instantiate(GuardPrefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity));
+        }
+    }
 }
+
+
