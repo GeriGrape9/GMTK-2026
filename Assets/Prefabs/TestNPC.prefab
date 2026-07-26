@@ -765,6 +765,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3731943692217236469, guid: d85925b232c140346b7160f4196c06c7, type: 3}
+      propertyPath: moodIcon
+      value: 
+      objectReference: {fileID: 4752026142152136192}
     - target: {fileID: 3995654378283636114, guid: d85925b232c140346b7160f4196c06c7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

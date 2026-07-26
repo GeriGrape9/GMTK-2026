@@ -103,13 +103,13 @@ public class NPCMovement : MonoBehaviour
             return;
         }
 
-        //Debug.Log(
-        //    $"HasPath: {agent.hasPath}, " +
-        //    $"PathStatus: {agent.pathStatus}, " +
-        //    $"Pending: {agent.pathPending}, " +
-        //    $"Remaining: {agent.remainingDistance}, " +
-        //    $"Corners: {agent.path.corners.Length}"
-        //);
+        Debug.Log(
+            $"HasPath: {agent.hasPath}, " +
+            $"PathStatus: {agent.pathStatus}, " +
+            $"Pending: {agent.pathPending}, " +
+            $"Remaining: {agent.remainingDistance}, " +
+            $"Corners: {agent.path.corners.Length}"
+        );
 
         Gizmos.color = Color.cyan;
 
@@ -171,7 +171,7 @@ public class NPCMovement : MonoBehaviour
             }
             else
             {
-                if (agent.remainingDistance < 1)
+                if (stats.HeldItem == NPCManager.HeldItem.Knife)
                 {
                     murderPathFound = false;
                 }

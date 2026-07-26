@@ -6,29 +6,18 @@ public class NPCHoverBubble : MonoBehaviour
 {
     public GameObject bubbleRoot;       // the world-space canvas object
     [SerializeField] private NPCInfoDisplay infoDisplay;  // lives on the same canvas
-    [SerializeField] private Image MoodSprite;  // lives on the same canvas
-    [SerializeField] private Image PrisonerFace;  // lives on the same canvas
     private CCTVManager cctvController;
     private NPCManager NPCManager;
-
-    private void UpdateMoodIcon()
-    {
-        NPCMoods NPCMoods = GetComponent<NPCMoods>();
-        NPCMoods.Moods HighestMood = NPCMoods.FindHighestMood();
-        MoodSprite.sprite = NPCMoods.MoodIconList[(int)HighestMood];   
-    }
 
     private void Awake()
     {
         cctvController = GetComponent<NPCStats>().CCTVManager;
         NPCManager = GetComponent<NPCStats>().NPCManager;
-        PrisonerFace.sprite = transform.Find("Sprite").gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
     void Start()
     {
         bubbleRoot.SetActive(false);
-        UpdateMoodIcon();
     }
 
     void Update()
@@ -45,7 +34,6 @@ public class NPCHoverBubble : MonoBehaviour
         infoDisplay.SetData(stats);
         bubbleRoot.SetActive(true);
         NPCManager.ClickedNPC = stats.gameObject;
-        UpdateMoodIcon();
     }
 
     public void Hide()

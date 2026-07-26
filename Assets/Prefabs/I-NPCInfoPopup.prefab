@@ -864,6 +864,8 @@ MonoBehaviour:
   nameText: {fileID: 8388775869151876005}
   numberText: {fileID: 1317448014103238128}
   crimeText: {fileID: 5413378914126581472}
+  moodIcon: {fileID: 3299564987314887860}
+  PrisonerFace: {fileID: 2829349339865280798}
 --- !u!1 &4468509070945864610
 GameObject:
   m_ObjectHideFlags: 0
