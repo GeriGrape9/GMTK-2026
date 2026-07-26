@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class NPCHoverBubble : MonoBehaviour
 {
-    [SerializeField] private GameObject bubbleRoot;       // the world-space canvas object
+    public GameObject bubbleRoot;       // the world-space canvas object
     [SerializeField] private NPCInfoDisplay infoDisplay;  // lives on the same canvas
     [SerializeField] private Image MoodSprite;  // lives on the same canvas
     [SerializeField] private Image PrisonerFace;  // lives on the same canvas
@@ -48,7 +48,7 @@ public class NPCHoverBubble : MonoBehaviour
         UpdateMoodIcon();
     }
 
-    public void Hide(NPCStats stats)
+    public void Hide()
     {
         bubbleRoot.SetActive(false);
         NPCManager.ClickedNPC = null;

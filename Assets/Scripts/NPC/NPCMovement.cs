@@ -103,13 +103,13 @@ public class NPCMovement : MonoBehaviour
             return;
         }
 
-        Debug.Log(
-            $"HasPath: {agent.hasPath}, " +
-            $"PathStatus: {agent.pathStatus}, " +
-            $"Pending: {agent.pathPending}, " +
-            $"Remaining: {agent.remainingDistance}, " +
-            $"Corners: {agent.path.corners.Length}"
-        );
+        //Debug.Log(
+        //    $"HasPath: {agent.hasPath}, " +
+        //    $"PathStatus: {agent.pathStatus}, " +
+        //    $"Pending: {agent.pathPending}, " +
+        //    $"Remaining: {agent.remainingDistance}, " +
+        //    $"Corners: {agent.path.corners.Length}"
+        //);
 
         Gizmos.color = Color.cyan;
 
