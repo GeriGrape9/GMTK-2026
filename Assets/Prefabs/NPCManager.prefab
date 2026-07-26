@@ -154,9 +154,13 @@ MonoBehaviour:
   - Meteor Hammer Usage
   - Missile System Usage
   - Destruction of Energy Facility
+  NPCPrefab: {fileID: 0}
   MaxNPCNumber: 34
   NPCList:
   - {fileID: 0}
+  AliveNPCs: 0
+  ClickedNPC: {fileID: 0}
+  GuardManager: {fileID: 0}
 --- !u!114 &5897586576876040166
 MonoBehaviour:
   m_ObjectHideFlags: 0

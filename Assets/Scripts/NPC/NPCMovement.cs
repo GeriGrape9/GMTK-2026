@@ -22,23 +22,26 @@ public class NPCMovement : MonoBehaviour
         return Mathf.Log(h.mask, 2.0f);
     }
 
-    public Vector3 RandomNavmeshLocation(float radius)
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * radius;
-        randomDirection += transform.position;
-        Vector3 finalPosition = Vector3.zero;
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, GetComponent<NavMeshAgent>().areaMask))
-        {
-            finalPosition = hit.position;
-        }
-        return finalPosition;
-    }
-
     public Vector3 GetRandomPoint()
     {
-        NavMeshTriangulation mesh = NavMesh.CalculateTriangulation();
+        NavMeshTriangulation mesh = NPCManager.mesh;
 
-        int triangle = Random.Range(0, mesh.indices.Length / 3) * 3;
+        float randomArea = Random.Range(0f, NPCManager.totalArea);
+
+        float cumulative = 0f;
+
+        int triangle = 0;
+
+        for (int i = 0; i < NPCManager.TriangleAreas.Count; i++)
+        {
+            cumulative += NPCManager.TriangleAreas[i];
+
+            if (randomArea <= cumulative)
+            {
+                triangle = i;
+                break;
+            }
+        }
 
         Vector3 a = mesh.vertices[mesh.indices[triangle]];
         Vector3 b = mesh.vertices[mesh.indices[triangle + 1]];

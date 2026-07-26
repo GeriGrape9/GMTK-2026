@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -75,6 +76,11 @@ public class NPCManager : MonoBehaviour
 
     private string hexColor = "#FF0B00";
 
+    public NavMeshTriangulation mesh;
+    public List<float> TriangleAreas;
+    public float totalArea;
+
+
     public void Bump(GameObject NPC1, GameObject NPC2)
     {
         NPCStats Stats1 = NPC1.GetComponent<NPCStats>();
@@ -139,6 +145,25 @@ public class NPCManager : MonoBehaviour
         ColorUtility.TryParseHtmlString(hexColor, out Color newColor);
         NPC.transform.Find("Sprite").GetComponent<SpriteRenderer>().color = newColor;
         AliveNPCs--;
+    }
+
+    private void Awake()
+    {
+        mesh = NavMesh.CalculateTriangulation();
+        TriangleAreas = new();
+        totalArea = 0f;
+
+        for (int i = 0; i < mesh.indices.Length; i += 3)
+        {
+            Vector3 a = mesh.vertices[mesh.indices[i]];
+            Vector3 b = mesh.vertices[mesh.indices[i + 1]];
+            Vector3 c = mesh.vertices[mesh.indices[i + 2]];
+
+            float area = Vector3.Cross(b - a, c - a).magnitude * 0.5f;
+
+            TriangleAreas.Add(area);
+            totalArea += area;
+        }
     }
 
     private void Start()
