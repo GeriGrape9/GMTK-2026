@@ -104,11 +104,9 @@ public class NPCManager : MonoBehaviour
     {
         foreach ( GameObject NPC in NPCList)
         {
-            if (NPC.GetComponent<NPCStats>().Loitering && 
-                !NPC.GetComponent<NavMeshAgent>().hasPath &&
-                !NPC.GetComponent<NPCStats>().Dead)
+            if ((NPC.GetComponent<NPCStats>().Loitering && !NPC.GetComponent<NPCStats>().Dead) && (!NPC.GetComponent<NavMeshAgent>().hasPath || NPC.GetComponent<NavMeshAgent>().remainingDistance < 2))
             {
-                bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
+                bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().GetRandomPoint());
             }
         }
     }
@@ -149,7 +147,7 @@ public class NPCManager : MonoBehaviour
         for (int i = 1; i < MaxNPCNumber + 1; i++)
         {
             GameObject newNPC = Instantiate(NPCPrefab, Vector3.zero, Quaternion.identity);
-            newNPC.transform.position = newNPC.GetComponent<NPCMovement>().RandomNavmeshLocation(100.0f);
+            newNPC.transform.position = newNPC.GetComponent<NPCMovement>().GetRandomPoint();
             newNPC.name = "NPC #" + i;
             NPCList.Add(newNPC);
         }

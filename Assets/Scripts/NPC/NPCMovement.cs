@@ -34,6 +34,28 @@ public class NPCMovement : MonoBehaviour
         return finalPosition;
     }
 
+    public Vector3 GetRandomPoint()
+    {
+        NavMeshTriangulation mesh = NavMesh.CalculateTriangulation();
+
+        int triangle = Random.Range(0, mesh.indices.Length / 3) * 3;
+
+        Vector3 a = mesh.vertices[mesh.indices[triangle]];
+        Vector3 b = mesh.vertices[mesh.indices[triangle + 1]];
+        Vector3 c = mesh.vertices[mesh.indices[triangle + 2]];
+
+        float r1 = Random.value;
+        float r2 = Random.value;
+
+        if (r1 + r2 > 1f)
+        {
+            r1 = 1f - r1;
+            r2 = 1f - r2;
+        }
+
+        return a + (b - a) * r1 + (c - a) * r2;
+    }
+
     public GameObject FindClosestWeapon()
     {
         GameObject[] WeaponList = GameObject.FindGameObjectsWithTag("Weapon");
@@ -109,14 +131,14 @@ public class NPCMovement : MonoBehaviour
             return;
         }
 
-        //Debug.Log(
-        //    $"Name: {agent.gameObject.name}, " +
-        //    $"HasPath: {agent.hasPath}, " +
-        //    $"PathStatus: {agent.pathStatus}, " +
-        //    $"Pending: {agent.pathPending}, " +
-        //    $"Remaining: {agent.remainingDistance}, " +
-        //    $"Corners: {agent.path.corners.Length}"
-        //);
+        Debug.Log(
+            $"Name: {agent.gameObject.name}, " +
+            $"HasPath: {agent.hasPath}, " +
+            $"PathStatus: {agent.pathStatus}, " +
+            $"Pending: {agent.pathPending}, " +
+            $"Remaining: {agent.remainingDistance}, " +
+            $"Corners: {agent.path.corners.Length}"
+        );
 
         Gizmos.color = Color.cyan;
 
