@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using ColorUtility = UnityEngine.ColorUtility;
 
 public class NPCManager : MonoBehaviour
 {
@@ -64,9 +67,13 @@ public class NPCManager : MonoBehaviour
 
     public List<GameObject> NPCList;
 
+    public int AliveNPCs;
+
     public GameObject ClickedNPC;
 
     [SerializeField] private GuardManager GuardManager;
+
+    private string hexColor = "#FF0B00";
 
     public void Bump(GameObject NPC1, GameObject NPC2)
     {
@@ -97,10 +104,11 @@ public class NPCManager : MonoBehaviour
     {
         foreach ( GameObject NPC in NPCList)
         {
-            if (NPC.GetComponent<NPCStats>().Loitering && !NPC.GetComponent<NavMeshAgent>().hasPath)
+            if (NPC.GetComponent<NPCStats>().Loitering && 
+                !NPC.GetComponent<NavMeshAgent>().hasPath &&
+                !NPC.GetComponent<NPCStats>().Dead)
             {
                 bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
-                //Debug.Log($"SetDestination: {success}");
             }
         }
     }
@@ -126,8 +134,18 @@ public class NPCManager : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 160.0f);
     }
 
+    public void Kill(GameObject NPC)
+    {
+        NPC.GetComponent<NPCStats>().Dead = true;
+        NPC.GetComponent<NavMeshAgent>().ResetPath();
+        ColorUtility.TryParseHtmlString(hexColor, out Color newColor);
+        NPC.transform.Find("Sprite").GetComponent<SpriteRenderer>().color = newColor;
+        AliveNPCs--;
+    }
+
     private void Start()
     {
+        AliveNPCs = MaxNPCNumber;
         for (int i = 1; i < MaxNPCNumber + 1; i++)
         {
             GameObject newNPC = Instantiate(NPCPrefab, Vector3.zero, Quaternion.identity);
@@ -148,6 +166,11 @@ public class NPCManager : MonoBehaviour
             closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
         }
         UpdateGlobalTask();
+
+        if (AliveNPCs == 0)
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
 

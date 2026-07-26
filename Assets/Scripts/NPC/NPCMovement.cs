@@ -60,31 +60,38 @@ public class NPCMovement : MonoBehaviour
     {
         if (CompareTag(collision.gameObject.tag) && 
             CompareTag("NPC") && 
-            !collision.gameObject.GetComponent<NPCStats>().Dead
-            && stats.MurderTarget == null)
+            !collision.gameObject.GetComponent<NPCStats>().Dead)
         {
-            GameObject otherNPC = collision.gameObject;
-            if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
+            if (stats.MurderTarget == null)
             {
-                NPCManager.Bump(gameObject, otherNPC);
-                GetComponent<NPCMoods>().UpdateEmotion(otherNPC.GetComponent<NPCStats>().Number);
+                GameObject otherNPC = collision.gameObject;
+                if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0)
+                {
+                    NPCManager.Bump(gameObject, otherNPC);
+                    GetComponent<NPCMoods>().UpdateEmotion(otherNPC.GetComponent<NPCStats>().Number);
 
-                NPCManager.Bump(otherNPC, gameObject);
-                otherNPC.GetComponent<NPCMoods>().UpdateEmotion(stats.Number);
+                    NPCManager.Bump(otherNPC, gameObject);
+                    otherNPC.GetComponent<NPCMoods>().UpdateEmotion(stats.Number);
+                }
+                stats.BumpTimer = 3.0f;
+                otherNPC.GetComponent<NPCStats>().BumpTimer = 3.0f;
+            } else
+            {
+                if (collision.gameObject == stats.MurderTarget && stats.HeldItem == NPCManager.HeldItem.Knife)
+                {
+                    NPCManager.Kill(collision.gameObject);
+                    stats.HeldItem = NPCManager.HeldItem.None;
+                    stats.MoodList[collision.gameObject.GetComponent<NPCStats>().Number] = NPCMoods.Moods.None;
+                    collision.gameObject.GetComponent<BoxCollider>().enabled = false;
+                }
             }
-            stats.BumpTimer = 3.0f;
-            otherNPC.GetComponent<NPCStats>().BumpTimer = 3.0f;
+            
         }
 
         if (collision.gameObject.CompareTag("Weapon") && stats.MurderTarget != null)
         {
             stats.HeldItem = NPCManager.HeldItem.Knife;
         }
-    }
-
-    public void Murder()
-    {
-
     }
 
     private void OnDrawGizmosSelected()
@@ -166,8 +173,6 @@ public class NPCMovement : MonoBehaviour
 
                 bool success = agent.SetDestination(target);
                 murderPathFound = true;
-
-                Debug.Log($"SetDestination: {success}, target: {target}");
             }
             else
             {
@@ -176,8 +181,6 @@ public class NPCMovement : MonoBehaviour
                     murderPathFound = false;
                 }
             }
-
-
         }
 
         if (prevAreaIndex != newIndex)

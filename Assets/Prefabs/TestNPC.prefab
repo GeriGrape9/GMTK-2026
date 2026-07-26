@@ -487,8 +487,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCHoverBubble
   bubbleRoot: {fileID: 8584097432931447348}
   infoDisplay: {fileID: 6913721716841607489}
-  MoodSprite: {fileID: 4752026142152136192}
-  PrisonerFace: {fileID: 5438976698308017066}
 --- !u!1 &7433897569357671558
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,17 +960,6 @@ RectTransform:
 --- !u!114 &4752026142152136192 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3299564987314887860, guid: d85925b232c140346b7160f4196c06c7, type: 3}
-  m_PrefabInstance: {fileID: 7798262333815474868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
---- !u!114 &5438976698308017066 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2829349339865280798, guid: d85925b232c140346b7160f4196c06c7, type: 3}
   m_PrefabInstance: {fileID: 7798262333815474868}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
