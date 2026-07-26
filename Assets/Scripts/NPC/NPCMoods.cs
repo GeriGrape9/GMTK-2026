@@ -25,9 +25,11 @@ public class NPCMoods : MonoBehaviour
 
     [SerializeField] private Animator bubbleAnimator;
 
+    public Sprite[] MoodIconList;
+
     private CCTVManager CCTVManager;
 
-    private void Start()
+    private void Awake()
     {
         CCTVManager = GetComponent<NPCStats>().CCTVManager;
     }
@@ -45,6 +47,23 @@ public class NPCMoods : MonoBehaviour
     {
         bubbleAnimator.SetTrigger("BubblePopup");
         SwitchEmotion(NPC2);
+    }
+
+    public Moods FindHighestMood()
+    {
+        Moods[] moodList = GetComponent<NPCStats>().MoodList;
+        Moods HighestMood = moodList[0];
+        foreach (Moods mood in moodList)
+        {
+            if (mood == Moods.Evil)
+                return Moods.Evil;
+
+            if ((int) mood > (int) HighestMood)
+            {
+                HighestMood = mood;
+            }
+        }
+        return HighestMood;
     }
 
     private void SwitchEmotion(int NPC2)

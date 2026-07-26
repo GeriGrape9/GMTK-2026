@@ -14,8 +14,8 @@ public class NPCMovement : MonoBehaviour
     private NavMeshAgent agent;
     private CCTVManager CCTVManager;
     private NPCManager NPCManager;
-
     private NPCStats stats;
+    private bool murderPathFound;
     public float GetCurrentAreaIndex()
     {
         GetComponent<NavMeshAgent>().SamplePathPosition(NavMesh.AllAreas, 1, out NavMeshHit h);
@@ -60,7 +60,8 @@ public class NPCMovement : MonoBehaviour
     {
         if (CompareTag(collision.gameObject.tag) && 
             CompareTag("NPC") && 
-            !collision.gameObject.GetComponent<NPCStats>().Dead)
+            !collision.gameObject.GetComponent<NPCStats>().Dead
+            && stats.MurderTarget == null)
         {
             GameObject otherNPC = collision.gameObject;
             if (stats.BumpTimer == 0 && otherNPC.GetComponent<NPCStats>().BumpTimer == 0) 
@@ -155,15 +156,28 @@ public class NPCMovement : MonoBehaviour
             stats.BumpTimer = 0;
         }
 
-        if (stats.MurderTarget != null && !agent.hasPath)
+        if (stats.MurderTarget != null)
         {
-            Vector3 target = stats.HeldItem != NPCManager.HeldItem.Knife 
+            if (!murderPathFound)
+            {
+                Vector3 target = stats.HeldItem != NPCManager.HeldItem.Knife
                 ? FindClosestWeapon().transform.position
                 : stats.MurderTarget.transform.position;
 
-            bool success = agent.SetDestination(target);
+                bool success = agent.SetDestination(target);
+                murderPathFound = true;
 
-            Debug.Log($"SetDestination: {success}, target: {target}");
+                Debug.Log($"SetDestination: {success}, target: {target}");
+            }
+            else
+            {
+                if (agent.remainingDistance < 1)
+                {
+                    murderPathFound = false;
+                }
+            }
+
+
         }
 
         if (prevAreaIndex != newIndex)
