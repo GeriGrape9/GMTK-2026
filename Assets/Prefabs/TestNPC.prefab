@@ -319,7 +319,16 @@ MonoBehaviour:
   NPCMood: {fileID: 7433897569357671558}
   moodAnimator: {fileID: 2295621425429602791}
   bubbleAnimator: {fileID: 1042218931250215312}
-  CCTVManager: {fileID: 0}
+  MoodIconList:
+  - {fileID: 21300000, guid: eb8c02ba25043344bb3bccd609042aed, type: 3}
+  - {fileID: 21300000, guid: ca2b94b3ce6da894c93326a48a73896e, type: 3}
+  - {fileID: 21300000, guid: 42c16089a995e484f97c34c51d0eba63, type: 3}
+  - {fileID: 21300000, guid: d9d39bad2913b7a4e8849289d2bbebcf, type: 3}
+  - {fileID: 21300000, guid: 3455fbcad7e367c43b5bd70a5e5be7d5, type: 3}
+  - {fileID: 21300000, guid: 2445090e427f8344b94e83762de3a4c8, type: 3}
+  - {fileID: 21300000, guid: cb09251dec429aa49bd36821bc191d9c, type: 3}
+  - {fileID: 21300000, guid: 5f8469de2ed642046be3de65edab910b, type: 3}
+  - {fileID: 21300000, guid: 216ece4d91ea1694bba4a40157da2fbf, type: 3}
 --- !u!114 &6015422827389461399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,12 +341,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38329b98f28c18c419265060a7eb9166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
-  manager: {fileID: 0}
+  NPCManager: {fileID: 0}
+  CCTVManager: {fileID: 0}
   Name: 
   Number: 0
   Crime: 
   Loitering: 1
   BumpTimer: 3
+  MurderTarget: {fileID: 0}
+  Dead: 0
   MoodList: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   CurrentTask: 0
   HeldItem: 0
@@ -353,8 +365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d402cff8edeb341b24727b3bc3d642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCMovement
-  CCTVManager: {fileID: 0}
-  NPCManager: {fileID: 0}
 --- !u!195 &6246895048846717737
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -477,7 +487,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCHoverBubble
   bubbleRoot: {fileID: 8584097432931447348}
   infoDisplay: {fileID: 6913721716841607489}
-  cctvController: {fileID: 0}
+  MoodSprite: {fileID: 4752026142152136192}
+  PrisonerFace: {fileID: 5438976698308017066}
 --- !u!1 &7433897569357671558
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +745,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3299564987314887860, guid: d85925b232c140346b7160f4196c06c7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3596883256466111021, guid: d85925b232c140346b7160f4196c06c7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -940,6 +955,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7819277666951346034, guid: d85925b232c140346b7160f4196c06c7, type: 3}
   m_PrefabInstance: {fileID: 7798262333815474868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4752026142152136192 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3299564987314887860, guid: d85925b232c140346b7160f4196c06c7, type: 3}
+  m_PrefabInstance: {fileID: 7798262333815474868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &5438976698308017066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2829349339865280798, guid: d85925b232c140346b7160f4196c06c7, type: 3}
+  m_PrefabInstance: {fileID: 7798262333815474868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &6913721716841607489 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3731943692217236469, guid: d85925b232c140346b7160f4196c06c7, type: 3}

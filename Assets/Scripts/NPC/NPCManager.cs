@@ -121,11 +121,17 @@ public class NPCManager : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, 160.0f);
+    }
+
     private void Start()
     {
         for (int i = 1; i < MaxNPCNumber + 1; i++)
         {
-            GameObject newNPC = Instantiate(NPCPrefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity);
+            GameObject newNPC = Instantiate(NPCPrefab, Vector3.zero, Quaternion.identity);
+            newNPC.transform.position = newNPC.GetComponent<NPCMovement>().RandomNavmeshLocation(100.0f);
             newNPC.name = "NPC #" + i;
             NPCList.Add(newNPC);
         }
