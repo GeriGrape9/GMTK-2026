@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class HoverLockController : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class HoverLockController : MonoBehaviour
                     hoveredStats = stats;
                     hoveredBubble = hit.collider.GetComponent<NPCHoverBubble>();
                     hoveredBubble?.Show(stats);
+                    hoverBubble = hoveredBubble.bubbleRoot;
                     PlayRandomSfx(scanSfx);
                 }
                 return;
@@ -79,6 +81,7 @@ public class HoverLockController : MonoBehaviour
         {
             hoveredStats = null;
             hoveredTransform = null;
+            hoveredBubble.Hide();
             hoverBubble.SetActive(false);
         }
     }
