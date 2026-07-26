@@ -13,15 +13,16 @@ public class GuardStats : MonoBehaviour
             if (GetComponent<NPCStats>().Loitering == true)
                 GetComponent<NPCStats>().Loitering = false;
             bool success = GetComponent<NavMeshAgent>().SetDestination(TargetNPC.transform.position);
-            Debug.Log($"SetDestination: {success}, target: {TargetNPC}");
+            //Debug.Log($"SetDestination: {success}, target: {TargetNPC}");
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == TargetNPC) 
-        { 
-            // apply logic
+        {
+            NPCStats targetStats = collision.gameObject.GetComponent<NPCStats>();
+            targetStats.MoodList[targetStats.MurderTarget.GetComponent<NPCStats>().Number] = NPCMoods.Moods.Neutral;
             TargetNPC = null;
             busy = false;
         }

@@ -33,12 +33,10 @@ public class NPCHoverBubble : MonoBehaviour
     {
         infoDisplay.SetData(stats);
         bubbleRoot.SetActive(true);
-        NPCManager.ClickedNPC = stats.gameObject;
     }
 
     public void Hide()
     {
         bubbleRoot.SetActive(false);
-        NPCManager.ClickedNPC = null;
     }
 }

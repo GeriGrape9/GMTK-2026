@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,12 +7,18 @@ public class GuardManager : MonoBehaviour
 {
     public GameObject GuardPrefab;
     public int MaxGuardNumber;
-    public GameObject[] GuardList;
+    public List<GameObject> GuardList;
+
+    private void Awake()
+    {
+
+    }
 
     public GameObject FindClosestGuard(Vector3 NPCPosition)
     {
+        Debug.Log(GuardList.Count);
         float minDistance = Vector3.Distance(GuardList[0].transform.position, NPCPosition);
-        GameObject targetGuard = GuardList[0];
+        GameObject targetGuard = null;
         foreach (GameObject Guard in GuardList)
         {
             if (Vector3.Distance(Guard.transform.position, NPCPosition) < minDistance && !Guard.GetComponent<GuardStats>().busy)
@@ -22,6 +29,7 @@ public class GuardManager : MonoBehaviour
             }
         }
 
+        Debug.Log($"closest guard: {targetGuard}");
         return targetGuard;
     }
 
@@ -29,7 +37,8 @@ public class GuardManager : MonoBehaviour
     {
         for (int i = 0; i < MaxGuardNumber; i++)
         {
-            GuardList.Append(Instantiate(GuardPrefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity));
+            GameObject newGuard = Instantiate(GuardPrefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity);
+            GuardList.Add(newGuard);
         }
     }
 }

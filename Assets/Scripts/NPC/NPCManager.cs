@@ -88,7 +88,7 @@ public class NPCManager : MonoBehaviour
                 {
                     Stats1.MurderTarget = NPC2;
                     Stats1.Loitering = false;
-                    Debug.Log("#" + Stats1.Number + "wants to shank");
+                    Debug.Log("#" + Stats1.Number + " wants to shank #" + Number2);
                 }
                 break;
             case 1:
@@ -104,11 +104,9 @@ public class NPCManager : MonoBehaviour
     {
         foreach ( GameObject NPC in NPCList)
         {
-            if (NPC.GetComponent<NPCStats>().Loitering && 
-                !NPC.GetComponent<NavMeshAgent>().hasPath &&
-                !NPC.GetComponent<NPCStats>().Dead)
+            if ((NPC.GetComponent<NPCStats>().Loitering && !NPC.GetComponent<NPCStats>().Dead) && (!NPC.GetComponent<NavMeshAgent>().hasPath || NPC.GetComponent<NavMeshAgent>().remainingDistance < 2))
             {
-                bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().RandomNavmeshLocation(4f));
+                bool success = NPC.GetComponent<NavMeshAgent>().SetDestination(NPC.GetComponent<NPCMovement>().GetRandomPoint());
             }
         }
     }
@@ -149,7 +147,7 @@ public class NPCManager : MonoBehaviour
         for (int i = 1; i < MaxNPCNumber + 1; i++)
         {
             GameObject newNPC = Instantiate(NPCPrefab, Vector3.zero, Quaternion.identity);
-            newNPC.transform.position = newNPC.GetComponent<NPCMovement>().RandomNavmeshLocation(100.0f);
+            newNPC.transform.position = newNPC.GetComponent<NPCMovement>().GetRandomPoint();
             newNPC.name = "NPC #" + i;
             NPCList.Add(newNPC);
         }
@@ -161,9 +159,13 @@ public class NPCManager : MonoBehaviour
         LoiteringCheck();
         if (ClickedNPC != null && Keyboard.current.qKey.wasPressedThisFrame)
         {
+            //Debug.Log("start sending guard");
             GameObject closestguard = GuardManager.FindClosestGuard(ClickedNPC.transform.position);
-            Debug.Log(closestguard != null ? "sending " + closestguard.name : "not found");
-            closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
+            //Debug.Log(closestguard != null ? "sending " + closestguard.name : "not found");
+            if (closestguard != null)
+                closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
+            else
+                Debug.Log("no more guards!");
         }
         UpdateGlobalTask();
 
