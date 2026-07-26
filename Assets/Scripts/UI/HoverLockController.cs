@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
@@ -26,6 +27,13 @@ public class HoverLockController : MonoBehaviour
     private Transform hoveredTransform;
     private NPCHoverBubble hoveredBubble;
     private NPCStats lockedStats;
+
+    private NPCManager NPCManager;
+
+    private void Awake()
+    {
+        NPCManager = FindFirstObjectByType<NPCManager>();
+    }
 
     void Start()
     {
@@ -88,7 +96,8 @@ public class HoverLockController : MonoBehaviour
 
     private void HandleClick()
     {
-        if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+        if (!Mouse.current.leftButton.wasPressedThisFrame) 
+            return;
 
         if (hoveredStats != null)
         {
@@ -97,12 +106,16 @@ public class HoverLockController : MonoBehaviour
             lockedDisplay.SetData(lockedStats);
             lockedPanel.SetActive(true);
             hoverBubble.SetActive(false);
+            NPCManager.ClickedNPC = lockedStats.gameObject;
+            Debug.Log("only once?");
             PlayRandomSfx(lockSfx);
         }
         else
         {
             // Clicked empty space to unlock
             lockedStats = null;
+            Debug.Log("yep only once");
+            NPCManager.ClickedNPC = null;
             lockedPanel.SetActive(false);
             ClearHover();
         }

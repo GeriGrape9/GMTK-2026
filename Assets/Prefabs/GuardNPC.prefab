@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 6246895048846717737}
   - component: {fileID: 5130506623026965158}
   - component: {fileID: 5156659758758800380}
+  - component: {fileID: 4807203685354312200}
   m_Layer: 6
   m_Name: GuardNPC
   m_TagString: NPC
@@ -463,6 +464,20 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4807203685354312200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6071110475555019140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242a433e6f1077945ae363f1973093ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardStats
+  TargetNPC: {fileID: 0}
+  busy: 0
 --- !u!1 &7433897569357671558
 GameObject:
   m_ObjectHideFlags: 0

@@ -88,7 +88,7 @@ public class NPCManager : MonoBehaviour
                 {
                     Stats1.MurderTarget = NPC2;
                     Stats1.Loitering = false;
-                    Debug.Log("#" + Stats1.Number + "wants to shank");
+                    Debug.Log("#" + Stats1.Number + " wants to shank #" + Number2);
                 }
                 break;
             case 1:
@@ -161,9 +161,13 @@ public class NPCManager : MonoBehaviour
         LoiteringCheck();
         if (ClickedNPC != null && Keyboard.current.qKey.wasPressedThisFrame)
         {
+            //Debug.Log("start sending guard");
             GameObject closestguard = GuardManager.FindClosestGuard(ClickedNPC.transform.position);
-            Debug.Log(closestguard != null ? "sending " + closestguard.name : "not found");
-            closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
+            //Debug.Log(closestguard != null ? "sending " + closestguard.name : "not found");
+            if (closestguard != null)
+                closestguard.GetComponent<GuardStats>().TargetNPC = ClickedNPC;
+            else
+                Debug.Log("no more guards!");
         }
         UpdateGlobalTask();
 

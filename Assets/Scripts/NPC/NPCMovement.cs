@@ -82,7 +82,6 @@ public class NPCMovement : MonoBehaviour
                     NPCManager.Kill(collision.gameObject);
                     stats.HeldItem = NPCManager.HeldItem.None;
                     stats.MoodList[collision.gameObject.GetComponent<NPCStats>().Number] = NPCMoods.Moods.None;
-                    collision.gameObject.GetComponent<BoxCollider>().enabled = false;
                 }
             }
             
@@ -110,13 +109,14 @@ public class NPCMovement : MonoBehaviour
             return;
         }
 
-        Debug.Log(
-            $"HasPath: {agent.hasPath}, " +
-            $"PathStatus: {agent.pathStatus}, " +
-            $"Pending: {agent.pathPending}, " +
-            $"Remaining: {agent.remainingDistance}, " +
-            $"Corners: {agent.path.corners.Length}"
-        );
+        //Debug.Log(
+        //    $"Name: {agent.gameObject.name}, " +
+        //    $"HasPath: {agent.hasPath}, " +
+        //    $"PathStatus: {agent.pathStatus}, " +
+        //    $"Pending: {agent.pathPending}, " +
+        //    $"Remaining: {agent.remainingDistance}, " +
+        //    $"Corners: {agent.path.corners.Length}"
+        //);
 
         Gizmos.color = Color.cyan;
 
