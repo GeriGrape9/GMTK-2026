@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameClock : MonoBehaviour
 {
@@ -22,7 +23,11 @@ public class GameClock : MonoBehaviour
 
     void Update()
     {
-        if (RunHasEnded) return;
+        if (RunHasEnded)
+        {
+            SceneManager.LoadScene(2);
+            return;
+        }
 
         elapsedRealSeconds += Time.deltaTime;
 
